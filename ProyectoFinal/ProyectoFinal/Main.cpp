@@ -97,9 +97,7 @@ int main( )
     Shader shader( "Shaders/modelLoading.vs", "Shaders/modelLoading.frag" );
     
     // Load models
-    Model fish((char*)"Models/Fishes/TropicalFish01.obj");
-    Model tail((char*)"Models/Fish/tail.obj");
-    Model body((char*)"Models/Fish/body.obj");
+    Model lamp((char*)"Models/Room/Lamp/lamp.obj");
 
     glm::mat4 projection = glm::perspective( camera.GetZoom( ), ( float )SCREEN_WIDTH/( float )SCREEN_HEIGHT, 0.1f, 100.0f );
 
@@ -116,7 +114,7 @@ int main( )
         DoMovement();
 
         // Clear the colorbuffer
-        glClearColor(0.0f, 0.415f, 0.58f, 1.0f);
+        glClearColor(0.623f, 0.627f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         shader.Use();
@@ -130,12 +128,7 @@ int main( )
         //model = glm::translate(model, glm::vec3(0, 0, glfwGetTime()));
         model = glm::rotate(model, glm::radians(rot), glm::vec3(0.0f, 1.0f, 0.0f));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        tail.Draw(shader);
-
-        model = glm::mat4(1);
-        //model = glm::translate(model, glm::vec3(0, 0, glfwGetTime()));
-        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        body.Draw(shader);
+        lamp.Draw(shader);
 
         // Swap the buffers
         glfwSwapBuffers( window );
