@@ -99,6 +99,7 @@ int main()
     // Load models
     Model plant((char*)"Models/Room/Plant/plant.obj");
     Model bed((char*)"Models/Room/Bed/bed.obj");
+    Model armchair((char*)"Models/Room/Armchair/armchair.obj");
 
     glm::mat4 projection = glm::perspective(camera.GetZoom(), (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 0.1f, 100.0f);
 
@@ -136,6 +137,13 @@ int main()
         model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         bed.Draw(shader);
+
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(1, 0, 2.5));
+        model = glm::scale(model, glm::vec3(0.7, 0.7, 0.7));
+        model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        armchair.Draw(shader);
 
         // Swap the bufferss
         glfwSwapBuffers(window);
