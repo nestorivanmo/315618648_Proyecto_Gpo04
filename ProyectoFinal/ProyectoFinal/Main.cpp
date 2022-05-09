@@ -147,7 +147,7 @@ int main()
         bed.Draw(shader);
 
         model = glm::mat4(1);
-        model = glm::translate(model, glm::vec3(1, 0, 2.5));
+        model = glm::translate(model, glm::vec3(1.2, 0, 2.5));
         model = glm::scale(model, glm::vec3(0.7, 0.7, 0.7));
         model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
@@ -216,7 +216,7 @@ int main()
         window_.Draw(shader);
 
         model = glm::mat4(1);
-        model = glm::translate(model, glm::vec3(0, 1.1, -1.1));
+        model = glm::translate(model, glm::vec3(0, 1.1, -1.3));
         model = glm::scale(model, glm::vec3(1.2, 1, 1));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         window_.Draw(shader);
