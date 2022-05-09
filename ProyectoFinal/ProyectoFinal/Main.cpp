@@ -110,6 +110,7 @@ int main()
     Model window_((char*)"Models/Room/Window/window.obj");
 
     Model house((char*)"Models/House/house.obj");
+    Model world_floor((char*)"Models/World/world_floor.obj");
 
     glm::mat4 projection = glm::perspective(camera.GetZoom(), (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 0.1f, 100.0f);
 
@@ -140,6 +141,12 @@ int main()
         glm::mat4 model(1);
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         house.Draw(shader);
+
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(0, -0.1, 0));
+        model = glm::scale(model, glm::vec3(50.0f, 1.0f, 50.0f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        world_floor.Draw(shader);
 
         //model = glm::mat4(1);
         ////model = glm::translate(model, glm::vec3(0, 0, glfwGetTime()));
