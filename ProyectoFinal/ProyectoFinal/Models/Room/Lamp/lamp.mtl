@@ -4,12 +4,6 @@ Kd 0.50 0.50 0.50
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
 Ni 1.00
-newmtl lambert2SG
-illum 4
-Kd 0.16 0.16 0.19
-Ka 0.00 0.00 0.00
-Tf 1.00 1.00 1.00
-Ni 1.00
 newmtl lambert3SG
 illum 4
 Kd 0.16 0.16 0.19
@@ -33,7 +27,7 @@ illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
-map_Kd lamp_gray.png
+map_Kd dark_cream.png
 Ni 1.00
 newmtl lambert7SG
 illum 4
@@ -54,5 +48,5 @@ illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
-map_Kd lamp_light_gray.png
+map_Kd cream.png
 Ni 1.00
