@@ -108,8 +108,10 @@ int main()
     Model lime_painting((char*)"Models/Room/Paintings/Lime/lime_painting.obj");
     Model lemon_painting((char*)"Models/Room/Paintings/Lemon/lemon.obj");
     Model window_((char*)"Models/Room/Window/window.obj");
+    Model door((char*)"Models/Room/Door/door.obj");
 
-    Model house((char*)"Models/House/house.obj");
+    Model house((char*)"Models/House/Facade/house.obj");
+    Model outside_door((char*)"Models/House/Outside_Door/outside_door.obj");
     Model world_floor((char*)"Models/World/world_floor.obj");
     Model tiled_floor((char*)"Models/World/Tiled_floor/tiled_floor.obj");
 
@@ -142,6 +144,12 @@ int main()
         glm::mat4 model(1);
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         house.Draw(shader);
+
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(-2.85, 0.1, 6.85f));
+        model = glm::scale(model, glm::vec3(1.1, 1.25, 1));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        outside_door.Draw(shader);
 
         model = glm::mat4(1);
         model = glm::translate(model, glm::vec3(0, -0.1, 0));
