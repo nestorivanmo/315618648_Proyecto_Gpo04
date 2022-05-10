@@ -44,6 +44,8 @@ GLfloat lastFrame = 0.0f;
 float rot = 0.0f;
 bool anim = false;
 bool opening = true;
+float outside_door_degrees = 0.0f, door_degrees = 0.0f;
+bool outside_door_open = true, door_open = true;
 
 int main()
 {
@@ -149,8 +151,9 @@ int main()
         house.Draw(shader);
 
         model = glm::mat4(1);
-        model = glm::translate(model, glm::vec3(-2.85, 0.1, 6.9f));
-        model = glm::scale(model, glm::vec3(1.1, 1.25, 1));
+        model = glm::translate(model, glm::vec3(-3.55, 1.25f, 6.9f));
+        model = glm::scale(model, glm::vec3(1.1, 1.4, 1));
+        model = glm::rotate(model, glm::radians(outside_door_degrees), glm::vec3(0, 1, 0));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         outside_door.Draw(shader);
 
@@ -219,8 +222,9 @@ int main()
         // ----------------------------------------------
 
         model = glm::mat4(1);
-        model = glm::translate(model, glm::vec3(2.67, 0.1, -2.2f));
-        model = glm::scale(model, glm::vec3(1.1, 1.25, 1));
+        model = glm::translate(model, glm::vec3(2.2f, 1.25f, -2.2f));
+        model = glm::scale(model, glm::vec3(1.0f, 1.25, 1));
+        model = glm::rotate(model, glm::radians(door_degrees), glm::vec3(0, 1, 0));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         door.Draw(shader);
 
@@ -361,6 +365,39 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
 
     if (keys[GLFW_KEY_O]) {
         anim = !anim;
+    }
+
+    if (keys[GLFW_KEY_U]) {
+        if (outside_door_degrees >= 90.0f) {
+            outside_door_open = false;
+        }
+
+        if (outside_door_degrees <= 0.0f) {
+            outside_door_open = true;
+        }
+
+        if (outside_door_open) {
+            outside_door_degrees += 10.0f;
+        } else {
+            outside_door_degrees -= 10.0f;
+        }
+    }
+
+    if (keys[GLFW_KEY_I]) {
+        if (door_degrees >= 90.0f) {
+            door_open = false;
+        }
+
+        if (door_degrees <= 0.0f) {
+            door_open = true;
+        }
+
+        if (door_open) {
+            door_degrees += 10.0f;
+        }
+        else {
+            door_degrees -= 10.0f;
+        }
     }
 
 }
