@@ -115,6 +115,8 @@ int main()
     Model world_floor((char*)"Models/World/world_floor.obj");
     Model tiled_floor((char*)"Models/World/Tiled_floor/tiled_floor.obj");
 
+    Model cone((char*)"Models/Extra/cone.obj");
+
     glm::mat4 projection = glm::perspective(camera.GetZoom(), (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 0.1f, 100.0f);
 
     // Game loop
@@ -170,6 +172,38 @@ int main()
         model = glm::scale(model, glm::vec3(1.15, 1.1, 1.0f));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         armchair.Draw(shader);
+
+
+        // ----------------------------------------------
+        // CONOS --- QUITAR DESPUÉS
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(0.3, 0.1, -3));
+        model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0, 1, 0));
+        model = glm::scale(model, glm::vec3(1.15, 1.1, 1.0f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        cone.Draw(shader);
+
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(0.3, 0.1, -6));
+        model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0, 1, 0));
+        model = glm::scale(model, glm::vec3(1.15, 1.1, 1.0f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        cone.Draw(shader);
+
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(-3, 0.1, -3));
+        model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0, 1, 0));
+        model = glm::scale(model, glm::vec3(1.15, 1.1, 1.0f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        cone.Draw(shader);
+
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(-3, 0.1, -6));
+        model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0, 1, 0));
+        model = glm::scale(model, glm::vec3(1.15, 1.1, 1.0f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        cone.Draw(shader);
+        // ----------------------------------------------
 
         model = glm::mat4(1);
         model = glm::translate(model, glm::vec3(2.67, 0.1, -2.2f));
