@@ -150,37 +150,39 @@ int main()
         world_floor.Draw(shader);
 
         model = glm::mat4(1);
-        model = glm::translate(model, glm::vec3(7.75, 0.1, -5.5));
+        model = glm::translate(model, glm::vec3(7.5, 0.1, -5.75));
         model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0, 1, 0));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         bed.Draw(shader);
 
-        //model = glm::mat4(1);
-        //model = glm::translate(model, glm::vec3(1.2, 0, 2.5));
-        //model = glm::scale(model, glm::vec3(0.7, 0.7, 0.7));
-        //model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-        //glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        //armchair.Draw(shader);
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(2.5, 0.1, -4.5));
+        model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0, 1, 0));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        armchair.Draw(shader);
 
-        //model = glm::mat4(1);
-        //model = glm::translate(model, glm::vec3(-2, 0, 2.5));
-        //model = glm::scale(model, glm::vec3(0.7, 0.7, 0.7));
-        //model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-        //glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        //wardrobe.Draw(shader);
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(3.5, 0.1, -9.25));
+        model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        wardrobe.Draw(shader);
 
-        //model = glm::mat4(1);
-        //model = glm::translate(model, glm::vec3(2.25, 0, -1));
-        //model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-        //model = glm::scale(model, glm::vec3(0.7, 0.7, 0.7));
-        //glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        //furniture.Draw(shader);
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(8.25, 0.1, -3.15));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        furniture.Draw(shader);
 
-        //model = glm::mat4(1);
-        //model = glm::translate(model, glm::vec3(1.25, 0, -1));
-        //model = glm::scale(model, glm::vec3(0.7, 0.7, 0.7));
-        //glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        //lamp.Draw(shader);
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(8.75, 0.1, -4.5));
+        model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0, 1, 0));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        lamp.Draw(shader);
+
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(8, 0.1, -8.0f));
+        model = glm::scale(model, glm::vec3(1.5, 2.25, 1.5));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        plant.Draw(shader);
 
         //model = glm::mat4(1);
         //model = glm::translate(model, glm::vec3(-2.25, 1.2, 2.5));
