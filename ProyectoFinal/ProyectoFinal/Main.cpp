@@ -146,7 +146,7 @@ int main()
         house.Draw(shader);
 
         model = glm::mat4(1);
-        model = glm::translate(model, glm::vec3(-2.85, 0.1, 6.85f));
+        model = glm::translate(model, glm::vec3(-2.85, 0.1, 6.9f));
         model = glm::scale(model, glm::vec3(1.1, 1.25, 1));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         outside_door.Draw(shader);
@@ -169,6 +169,12 @@ int main()
         model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0, 1, 0));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         armchair.Draw(shader);
+
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(2.67, 0.1, -2.2f));
+        model = glm::scale(model, glm::vec3(1.1, 1.25, 1));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        door.Draw(shader);
 
         model = glm::mat4(1);
         model = glm::translate(model, glm::vec3(3, 0.1, -9.75));
