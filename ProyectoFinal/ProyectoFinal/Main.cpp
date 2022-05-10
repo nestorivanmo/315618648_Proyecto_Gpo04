@@ -114,6 +114,7 @@ int main()
     Model outside_door((char*)"Models/House/Outside_Door/outside_door.obj");
     Model world_floor((char*)"Models/World/world_floor.obj");
     Model tiled_floor((char*)"Models/World/Tiled_floor/tiled_floor.obj");
+    Model garage_floor((char*)"Models/World/Garage_floor/garage_floor.obj");
 
     Model cone((char*)"Models/Extra/cone.obj");
 
@@ -158,6 +159,12 @@ int main()
         model = glm::scale(model, glm::vec3(0.7, 1, 1));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         tiled_floor.Draw(shader);
+
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(7.45, 0.05, 4.5f));
+        model = glm::scale(model, glm::vec3(1.12, 1, 1.1));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        garage_floor.Draw(shader);
 
         model = glm::mat4(1);
         model = glm::translate(model, glm::vec3(0, -0.1, 0));
