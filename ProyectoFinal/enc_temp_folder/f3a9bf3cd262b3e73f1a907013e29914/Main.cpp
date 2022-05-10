@@ -154,7 +154,7 @@ int main()
         outside_door.Draw(shader);
 
         model = glm::mat4(1);
-        model = glm::translate(model, glm::vec3(-2.85, 0.05, 9.25f));
+        model = glm::translate(model, glm::vec3(-2.85, 0.05, 9.0f));
         model = glm::scale(model, glm::vec3(0.7, 1, 1));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         tiled_floor.Draw(shader);
