@@ -165,8 +165,9 @@ int main()
         bed.Draw(shader);
 
         model = glm::mat4(1);
-        model = glm::translate(model, glm::vec3(2.5, 0.1, -4.5));
+        model = glm::translate(model, glm::vec3(2.5, 0.15, -4.5));
         model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0, 1, 0));
+        model = glm::scale(model, glm::vec3(1.15, 1.1, 1.0f));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         armchair.Draw(shader);
 
