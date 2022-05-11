@@ -31,6 +31,7 @@ int SCREEN_WIDTH, SCREEN_HEIGHT;
 void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
 void MouseCallback(GLFWwindow* window, double xPos, double yPos);
 void DoMovement();
+void toggle_door(float& degrees, bool& open);
 
 
 // Camera
@@ -45,7 +46,9 @@ float rot = 0.0f;
 bool anim = false;
 bool opening = true;
 float outside_door_degrees = 0.0f, door_degrees = 0.0f;
+float leaves_time;
 bool outside_door_open = true, door_open = true;
+bool anim_leaves = false;
 
 int main()
 {
@@ -96,10 +99,17 @@ int main()
     glEnable(GL_DEPTH_TEST);
 
     // Setup and compile our shaders
+    Shader lightingShader("Shaders/lighting.vs", "Shaders/lighting.frag");
     Shader shader("Shaders/modelLoading.vs", "Shaders/modelLoading.frag");
+    Shader PlantAnim("Shaders/anim.vs", "Shaders/anim.frag");
 
     // Load models
     Model plant((char*)"Models/Room/Plant/plant.obj");
+    Model leaf1((char*)"Models/Room/Plant/Leaves/L1.obj");
+    Model leaf2((char*)"Models/Room/Plant/Leaves/L2.obj");
+    Model leaf3((char*)"Models/Room/Plant/Leaves/L3.obj");
+    Model leaf4((char*)"Models/Room/Plant/Leaves/L4.obj");
+    Model leaf5((char*)"Models/Room/Plant/Leaves/L5.obj");
     Model bed((char*)"Models/Room/Bed/bed.obj");
     Model armchair((char*)"Models/Room/Armchair/armchair.obj");
     Model wardrobe((char*)"Models/Room/Wardrobe/wardrobe.obj");
@@ -246,8 +256,8 @@ int main()
         lamp.Draw(shader);
 
         model = glm::mat4(1);
-        model = glm::translate(model, glm::vec3(8, 0.1, -8.0f));
-        model = glm::scale(model, glm::vec3(1.5, 2.25, 1.5));
+        model = glm::translate(model, glm::vec3(8.5, 0.1, -8.5f));
+        model = glm::scale(model, glm::vec3(2.5, 1.85, 2.0f));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         plant.Draw(shader);
 
@@ -300,6 +310,54 @@ int main()
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         window_.Draw(shader);
 
+        GLint modelLoc = glGetUniformLocation(lightingShader.Program, "model");
+        GLint viewLoc = glGetUniformLocation(lightingShader.Program, "view");
+        GLint projLoc = glGetUniformLocation(lightingShader.Program, "projection");
+
+        PlantAnim.Use();
+        leaves_time = anim_leaves ? glfwGetTime() : 0.0f;
+        modelLoc = glGetUniformLocation(PlantAnim.Program, "model");
+        viewLoc = glGetUniformLocation(PlantAnim.Program, "view");
+        projLoc = glGetUniformLocation(PlantAnim.Program, "projection");
+        glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+        glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
+        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(8.5, -0.3, -8.7f));
+        model = glm::scale(model, glm::vec3(1.5, 2.25, 1.5));
+        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1f(glGetUniformLocation(PlantAnim.Program, "time"), leaves_time);
+        leaf1.Draw(PlantAnim);
+
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(8.5, -0.3, -8.6f));
+        model = glm::scale(model, glm::vec3(1.5, 2.25, 1.5));
+        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1f(glGetUniformLocation(PlantAnim.Program, "time"), leaves_time);
+        leaf2.Draw(PlantAnim);
+
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(8.5, -0.3, -8.5f));
+        model = glm::scale(model, glm::vec3(1.5, 2.25, 1.5));
+        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1f(glGetUniformLocation(PlantAnim.Program, "time"), leaves_time);
+        leaf3.Draw(PlantAnim);
+
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(8.5, -0.3, -8.4f));
+        model = glm::scale(model, glm::vec3(1.5, 2.25, 1.5));
+        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1f(glGetUniformLocation(PlantAnim.Program, "time"), leaves_time);
+        leaf4.Draw(PlantAnim);
+
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(8.5, -0.3, -8.3f));
+        model = glm::scale(model, glm::vec3(1.5, 2.25, 1.5));
+        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1f(glGetUniformLocation(PlantAnim.Program, "time"), leaves_time);
+        leaf5.Draw(PlantAnim);
+
         // Swap the bufferss
         glfwSwapBuffers(window);
     }
@@ -342,6 +400,19 @@ void DoMovement()
     }
 }
 
+void toggle_door(float& degrees, bool& to_open) {
+    if (to_open) {
+        while (degrees < 90.0f) degrees += 0.1f;
+        degrees = 90.0f;
+        to_open = false;
+    }
+    else {
+        while (degrees > 0.0f) degrees -= 0.1;
+        degrees = 0.0f;
+        to_open = true;
+    }
+}
+
 // Is called whenever a key is pressed/released via GLFW
 void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
@@ -368,36 +439,17 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
     }
 
     if (keys[GLFW_KEY_U]) {
-        if (outside_door_degrees >= 90.0f) {
-            outside_door_open = false;
-        }
-
-        if (outside_door_degrees <= 0.0f) {
-            outside_door_open = true;
-        }
-
-        if (outside_door_open) {
-            outside_door_degrees += 10.0f;
-        } else {
-            outside_door_degrees -= 10.0f;
-        }
+        printf("U pressed - degrees:%f - open: %d\n", outside_door_degrees, outside_door_open);
+        toggle_door(outside_door_degrees, outside_door_open);
     }
 
     if (keys[GLFW_KEY_I]) {
-        if (door_degrees >= 90.0f) {
-            door_open = false;
-        }
+        printf("I pressed - degrees:%f - open: %d\n", door_degrees, door_open);
+        toggle_door(door_degrees, door_open);
+    }
 
-        if (door_degrees <= 0.0f) {
-            door_open = true;
-        }
-
-        if (door_open) {
-            door_degrees += 10.0f;
-        }
-        else {
-            door_degrees -= 10.0f;
-        }
+    if (keys[GLFW_KEY_J]) {
+        anim_leaves = !anim_leaves;
     }
 
 }
