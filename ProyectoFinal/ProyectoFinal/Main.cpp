@@ -23,6 +23,8 @@
 #include <glm/gtc/type_ptr.hpp>
 
 // Other libraries
+#include <chrono>
+#include <thread>
 #include <set>
 
 // Properties
@@ -62,6 +64,10 @@ bool wd_drawers_are_open = false; // wd -> wardrobe
 float wd_init_z = -9.33;
 float wd_final_z = -8.83;
 vector<float> wardrobe_drawers_z = { wd_init_z, wd_init_z, wd_init_z, wd_init_z, wd_init_z };
+
+// Wardrobe lamp
+bool lamp_in_wardrobe = true;
+float wardrobe_lamp_x= 3.5, wardrobe_lamp_y = 2.1, wardrobe_lamp_z = -9.4;
 
 
 int main()
@@ -132,6 +138,7 @@ int main()
     Model large_drawer_top((char*)"Models/Room/Wardrobe/Drawers/Large/large_drawer.obj");
     Model large_drawer_mid((char*)"Models/Room/Wardrobe/Drawers/Large/large_drawer.obj");
     Model large_drawer_bottom((char*)"Models/Room/Wardrobe/Drawers/Large/large_drawer.obj");
+    Model wardrobe_lamp((char*)"Models/Room/Wardrobe/Lamp/wardrobe_lamp.obj");
     Model furniture((char*)"Models/Room/BedsideFurniture/furniture.obj");
     Model drawer((char*)"Models/Room/BedsideFurniture/Drawer/drawer.obj");
     Model lamp((char*)"Models/Room/Lamp/lamp.obj");
@@ -262,6 +269,12 @@ int main()
         model = glm::scale(model, glm::vec3(1.85f, 1.5f, 1.5f));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         wardrobe.Draw(shader);
+
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(wardrobe_lamp_x, wardrobe_lamp_y, wardrobe_lamp_z));
+        model = glm::scale(model, glm::vec3(1.85f, 1.5f, 1.5f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        wardrobe_lamp.Draw(shader);
 
         model = glm::mat4(1);
         model = glm::translate(model, glm::vec3(2.53, 1.542, wardrobe_drawers_z[0]));
