@@ -43,8 +43,7 @@ vector<int> generate_wardrobe_drawers_ids();
 
 
 // Camera
-//Camera camera(glm::vec3(7.0f, 4.0f, 25.0f));
-Camera camera(glm::vec3(3.5f, 2.0f, -6.0f));
+Camera camera(glm::vec3(7.0f, 4.0f, 25.0f));
 bool keys[1024];
 GLfloat lastX = 400, lastY = 300;
 bool firstMouse = true;
@@ -142,7 +141,7 @@ int main()
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
     // Create a GLFWwindow object that we can use for GLFW's functions
-    GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Adaptacion,carga de modelos y camara sintetica", nullptr, nullptr);
+    GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "315618648 - Proyecto Final", nullptr, nullptr);
 
     if (nullptr == window)
     {
