@@ -22,6 +22,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+// Other libraries
+#include <set>
 
 // Properties
 const GLuint WIDTH = 800, HEIGHT = 600;
@@ -32,6 +34,9 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
 void MouseCallback(GLFWwindow* window, double xPos, double yPos);
 void DoMovement();
 void toggle_door(float& degrees, bool& open);
+void open_wardrobe_drawers(vector<int> drawers_ids, vector<float>& drawers_z_pos);
+void close_wardrobe_drawers(vector<float>& drawers_z_pos);
+vector<int> generate_wardrobe_drawers_ids();
 
 
 // Camera
@@ -51,6 +56,12 @@ float leaves_time;
 bool outside_door_open = true, door_open = true;
 bool anim_leaves = false, is_drawer_open = false;
 float drawer_x_pos = 8.15f;
+
+// Wardrobe drawers 
+bool wd_drawers_are_open = false; // wd -> wardrobe
+float wd_init_z = -9.33;
+float wd_final_z = -8.83;
+vector<float> wardrobe_drawers_z = { wd_init_z, wd_init_z, wd_init_z, wd_init_z, wd_init_z };
 
 
 int main()
@@ -253,31 +264,31 @@ int main()
         wardrobe.Draw(shader);
 
         model = glm::mat4(1);
-        model = glm::translate(model, glm::vec3(2.53, 1.542, -9.33));
+        model = glm::translate(model, glm::vec3(2.53, 1.542, wardrobe_drawers_z[0]));
         model = glm::scale(model, glm::vec3(1.97f, 1.53f, 1.5f));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         small_drawer_left.Draw(shader);
 
         model = glm::mat4(1);
-        model = glm::translate(model, glm::vec3(3.5, 1.542, -9.33));
+        model = glm::translate(model, glm::vec3(3.5, 1.542, wardrobe_drawers_z[1]));
         model = glm::scale(model, glm::vec3(1.97f, 1.53f, 1.5f));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         small_drawer_right.Draw(shader);
 
         model = glm::mat4(1);
-        model = glm::translate(model, glm::vec3(3.0, 1.15, -9.33));
+        model = glm::translate(model, glm::vec3(3.0, 1.15, wardrobe_drawers_z[2]));
         model = glm::scale(model, glm::vec3(1.97f, 1.65f, 1.5f));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         large_drawer_top.Draw(shader);
 
         model = glm::mat4(1);
-        model = glm::translate(model, glm::vec3(3.0, 0.75, -9.33));
+        model = glm::translate(model, glm::vec3(3.0, 0.75, wardrobe_drawers_z[3]));
         model = glm::scale(model, glm::vec3(1.97f, 1.65f, 1.5f));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         large_drawer_mid.Draw(shader);
 
         model = glm::mat4(1);
-        model = glm::translate(model, glm::vec3(3.0, 0.35, -9.33));
+        model = glm::translate(model, glm::vec3(3.0, 0.35, wardrobe_drawers_z[4]));
         model = glm::scale(model, glm::vec3(1.97f, 1.65f, 1.5f));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         large_drawer_bottom.Draw(shader);
@@ -458,6 +469,44 @@ void toggle_door(float& degrees, bool& to_open) {
     }
 }
 
+vector<int> generate_wardrobe_drawers_ids() {
+    vector<int> ids;
+
+    srand(time(0));
+    int num_drawers_to_open = (rand() % 5);
+
+    if (num_drawers_to_open == 0) num_drawers_to_open++;
+
+    if (num_drawers_to_open == 5) {
+        ids = { 0,1,2,3,4 };
+        return ids;
+    }
+
+    set<int> ids_set;
+    for (int i = 0; i < num_drawers_to_open; i++) {
+        ids_set.insert(rand() % 5);
+    }
+
+    for (auto s : ids_set) {
+        ids.push_back(s);
+    }
+
+    return ids;
+}
+
+void open_wardrobe_drawers(vector<int> drawers_ids, vector<float>& drawers_z_pos) {
+    for (auto id : drawers_ids) {
+        drawers_z_pos[id] = wd_final_z;
+    }
+}
+
+void close_wardrobe_drawers(vector<float> & drawers_z_pos) {
+    int num_drawers = 5;
+    for (int i = 0; i < num_drawers; i++) {
+        drawers_z_pos[i] = wd_init_z;
+    }
+}
+
 // Is called whenever a key is pressed/released via GLFW
 void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
@@ -483,21 +532,25 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
         anim = !anim;
     }
 
+    // Exterior door animation
     if (keys[GLFW_KEY_U]) {
         printf("U pressed - degrees:%f - open: %d\n", outside_door_degrees, outside_door_open);
         toggle_door(outside_door_degrees, outside_door_open);
     }
 
+    // Room 1's door animation
     if (keys[GLFW_KEY_I]) {
         printf("I pressed - degrees:%f - open: %d\n", door_degrees, door_open);
         toggle_door(door_degrees, door_open);
     }
 
+    // Plant's leaves animation
     if (keys[GLFW_KEY_J]) {
         printf("J pressed - anim_leaves: %d\n", anim_leaves);
         anim_leaves = !anim_leaves;
     }
 
+    // Bedside furniture's white drawer animation
     if (keys[GLFW_KEY_K]) {
         printf("K pressed - drawer is open: %d\n", is_drawer_open);
         if (is_drawer_open) {
@@ -506,6 +559,20 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
         } else {
             while (drawer_x_pos > 7.75f) drawer_x_pos -= 0.1f;
             is_drawer_open = true;
+        }
+    }
+
+    // Wardrobe's drawers animation
+    if (keys[GLFW_KEY_L]) {
+        printf("L pressed - wardrobe drawers are open: %d\n", wd_drawers_are_open);
+
+        if (wd_drawers_are_open) {
+            close_wardrobe_drawers(wardrobe_drawers_z);
+            wd_drawers_are_open = false;
+        } else {
+            auto drawers_ids = generate_wardrobe_drawers_ids();
+            open_wardrobe_drawers(drawers_ids, wardrobe_drawers_z);
+            wd_drawers_are_open = true;
         }
     }
 
