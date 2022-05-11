@@ -35,6 +35,7 @@ int SCREEN_WIDTH, SCREEN_HEIGHT;
 void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
 void MouseCallback(GLFWwindow* window, double xPos, double yPos);
 void DoMovement();
+void animacion();
 void toggle_door(float& degrees, bool& open);
 void open_wardrobe_drawers(vector<int> drawers_ids, vector<float>& drawers_z_pos);
 void close_wardrobe_drawers(vector<float>& drawers_z_pos);
@@ -43,7 +44,7 @@ vector<int> generate_wardrobe_drawers_ids();
 
 // Camera
 //Camera camera(glm::vec3(7.0f, 4.0f, 25.0f));
-Camera camera(glm::vec3(3.5f, 1.5f, -6.0f));
+Camera camera(glm::vec3(3.5f, 2.0f, -6.0f));
 bool keys[1024];
 GLfloat lastX = 400, lastY = 300;
 bool firstMouse = true;
@@ -66,9 +67,68 @@ float wd_final_z = -8.83;
 vector<float> wardrobe_drawers_z = { wd_init_z, wd_init_z, wd_init_z, wd_init_z, wd_init_z };
 
 // Wardrobe lamp
+float delta_mov = 0.2f;
 bool lamp_in_wardrobe = true;
-float wardrobe_lamp_x= 3.5, wardrobe_lamp_y = 2.1, wardrobe_lamp_z = -9.4;
+glm::vec3 PosIni(3.5f, 2.1f, -9.4f);
+bool active;
+float posX = PosIni.x, posY = PosIni.y, posZ = PosIni.z;
+float lamp_wardrobe_degrees = 0.0f;
 
+#define MAX_FRAMES 9
+int i_max_steps = 10;
+int i_curr_steps = 0;
+typedef struct _frame {
+    float posX;		
+    float posY;		
+    float posZ;		
+    float incX;		
+    float incY;		
+    float incZ;		
+
+} FRAME;
+
+FRAME KeyFrame[MAX_FRAMES];
+int FrameIndex = 0;			
+bool play = false;
+int playIndex = 0;
+
+void saveFrame(void) {
+
+    printf("Frameindex %d\n", FrameIndex);
+
+    KeyFrame[FrameIndex].posX = posX;
+    KeyFrame[FrameIndex].posY = posY;
+    KeyFrame[FrameIndex].posZ = posZ;
+
+    FrameIndex++;
+}
+
+void resetElements(void) {
+    lamp_wardrobe_degrees = 0.0f;
+    posX = KeyFrame[0].posX;
+    posY = KeyFrame[0].posY;
+    posZ = KeyFrame[0].posZ;
+}
+
+void interpolation(void) {
+
+    if (playIndex == 2) {
+        lamp_wardrobe_degrees = -30.0f;
+    } else if (playIndex == 4) {
+        lamp_wardrobe_degrees = -60.0f;
+    }
+    else if (playIndex == 5) {
+        lamp_wardrobe_degrees = -90.0f;
+    }
+    else if (playIndex == 6) {
+        lamp_wardrobe_degrees = -120.0f;
+    }
+
+    KeyFrame[playIndex].incX = (KeyFrame[playIndex + 1].posX - KeyFrame[playIndex].posX) / i_max_steps;
+    KeyFrame[playIndex].incY = (KeyFrame[playIndex + 1].posY - KeyFrame[playIndex].posY) / i_max_steps;
+    KeyFrame[playIndex].incZ = (KeyFrame[playIndex + 1].posZ - KeyFrame[playIndex].posZ) / i_max_steps;
+
+}
 
 int main()
 {
@@ -159,6 +219,17 @@ int main()
 
     glm::mat4 projection = glm::perspective(camera.GetZoom(), (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 0.1f, 100.0f);
 
+    //Inicialización de KeyFrames
+
+    for (int i = 0; i < MAX_FRAMES; i++)
+    {
+        KeyFrame[i].posX = 0;
+        KeyFrame[i].incX = 0;
+        KeyFrame[i].incY = 0;
+        KeyFrame[i].incZ = 0;
+    }
+
+
     // Game loop
     while (!glfwWindowShouldClose(window))
     {
@@ -170,6 +241,7 @@ int main()
         // Check and call events
         glfwPollEvents();
         DoMovement();
+        animacion();
 
         // Clear the colorbuffer
         //glClearColor(0.623f, 0.627f, 1.0f, 1.0f);
@@ -208,7 +280,7 @@ int main()
 
         model = glm::mat4(1);
         model = glm::translate(model, glm::vec3(0, -0.1, 0));
-        model = glm::scale(model, glm::vec3(50.0f, 1.0f, 50.0f));
+        model = glm::scale(model, glm::vec3(30.0f, 1.0f, 30.0f));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         world_floor.Draw(shader);
 
@@ -271,8 +343,9 @@ int main()
         wardrobe.Draw(shader);
 
         model = glm::mat4(1);
-        model = glm::translate(model, glm::vec3(wardrobe_lamp_x, wardrobe_lamp_y, wardrobe_lamp_z));
+        model = glm::translate(model, glm::vec3(posX, posY, posZ));
         model = glm::scale(model, glm::vec3(1.85f, 1.5f, 1.5f));
+        model = glm::rotate(model, glm::radians(lamp_wardrobe_degrees), glm::vec3(0, 0, 1));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         wardrobe_lamp.Draw(shader);
 
@@ -460,6 +533,27 @@ void DoMovement()
         camera.ProcessKeyboard(RIGHT, deltaTime);
     }
 
+    if (keys[GLFW_KEY_1]) {
+        posX += delta_mov;
+    }
+    if (keys[GLFW_KEY_2]) {
+        posX -= delta_mov;
+    }
+
+    if (keys[GLFW_KEY_3]) {
+        posY += delta_mov;
+    }
+    if (keys[GLFW_KEY_4]) {
+        posY -= delta_mov;
+    }
+
+    if (keys[GLFW_KEY_5]) {
+        posZ += delta_mov;
+    }
+    if (keys[GLFW_KEY_6]) {
+        posZ -= delta_mov;
+    }
+
     float delta = 0.02f;
 
     if (anim) {
@@ -517,6 +611,40 @@ void close_wardrobe_drawers(vector<float> & drawers_z_pos) {
     int num_drawers = 5;
     for (int i = 0; i < num_drawers; i++) {
         drawers_z_pos[i] = wd_init_z;
+    }
+}
+
+void animacion() {
+
+    //Movimiento del personaje
+
+    if (play)
+    {
+        if (i_curr_steps >= i_max_steps) //end of animation between frames?
+        {
+            playIndex++;
+            if (playIndex > FrameIndex - 2)	//end of total animation?
+            {
+                printf("termina anim\n");
+                playIndex = 0;
+                play = false;
+            }
+            else //Next frame interpolations
+            {
+                i_curr_steps = 0; //Reset counter
+                                  //Interpolation
+                interpolation();
+            }
+        }
+        else
+        {
+            //Draw animation
+            posX += KeyFrame[playIndex].incX;
+            posY += KeyFrame[playIndex].incY;
+            posZ += KeyFrame[playIndex].incZ;
+            i_curr_steps++;
+        }
+
     }
 }
 
@@ -586,6 +714,31 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
             auto drawers_ids = generate_wardrobe_drawers_ids();
             open_wardrobe_drawers(drawers_ids, wardrobe_drawers_z);
             wd_drawers_are_open = true;
+        }
+    }
+    
+    // Wardrobe's lamp
+    if (keys[GLFW_KEY_N]) {
+
+        KeyFrame[0].posX = 3.5f; KeyFrame[0].posY = 2.1f; KeyFrame[0].posZ = -9.4f;
+        KeyFrame[1].posX = 3.9f; KeyFrame[1].posY = 2.1f; KeyFrame[1].posZ = -9.4f;
+        KeyFrame[2].posX = 4.3f; KeyFrame[2].posY = 2.1f; KeyFrame[2].posZ = -9.4f;
+        KeyFrame[3].posX = 4.7f; KeyFrame[3].posY = 1.9f; KeyFrame[3].posZ = -9.4f;
+        KeyFrame[4].posX = 5.1f; KeyFrame[4].posY = 1.6f; KeyFrame[4].posZ = -9.4f;
+        KeyFrame[5].posX = 5.5f; KeyFrame[5].posY = 1.1f; KeyFrame[5].posZ = -9.4f;
+        KeyFrame[6].posX = 5.9f; KeyFrame[6].posY = 0.7f; KeyFrame[6].posZ = -9.4f;
+        KeyFrame[7].posX = 6.3f; KeyFrame[7].posY = 0.3f; KeyFrame[7].posZ = -9.4f;
+        KeyFrame[8].posX = 6.7f; KeyFrame[8].posY = 0.0f; KeyFrame[8].posZ = -9.4f;
+        FrameIndex = 8;
+
+        if (play == false && (FrameIndex > 1)) {
+            resetElements();
+            interpolation();
+            play = true;
+            playIndex = 0;
+            i_curr_steps = 0;
+        } else {
+            play = false;
         }
     }
 
