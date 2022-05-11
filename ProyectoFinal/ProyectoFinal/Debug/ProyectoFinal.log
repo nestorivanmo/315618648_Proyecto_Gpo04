@@ -1,12 +1,14 @@
 ﻿  Main.cpp
-C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(108,30): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(206,17): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(207,17): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(211,21): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(212,21): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(214,13): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(215,13): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-soil2-debug.lib(image_DXT.obj) : warning LNK4099: PDB 'soil2-debug.pdb' was not found with 'soil2-debug.lib(image_DXT.obj)' or at 'C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\Debug\soil2-debug.pdb'; linking object as if no debug info
-soil2-debug.lib(image_helper.obj) : warning LNK4099: PDB '' was not found with 'soil2-debug.lib(image_helper.obj)' or at ''; linking object as if no debug info
-soil2-debug.lib(SOIL2.obj) : warning LNK4099: PDB 'soil2-debug.pdb' was not found with 'soil2-debug.lib(SOIL2.obj)' or at 'C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\Debug\soil2-debug.pdb'; linking object as if no debug info
+C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(65,24): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(66,25): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(237,30): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(460,23): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(573,46): warning C4305: '-=': truncation from 'double' to 'float'
+C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(582,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(751,17): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(752,17): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(756,21): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(757,21): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(759,13): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(760,13): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
   ProyectoFinal.vcxproj -> C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\Debug\ProyectoFinal.exe
