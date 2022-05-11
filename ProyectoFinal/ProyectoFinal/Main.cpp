@@ -115,6 +115,10 @@ int main()
     Model bed((char*)"Models/Room/Bed/bed.obj");
     Model armchair((char*)"Models/Room/Armchair/armchair.obj");
     Model wardrobe((char*)"Models/Room/Wardrobe/wardrobe.obj");
+    Model small_drawer_left((char*)"Models/Room/Wardrobe/Drawers/Small/small_drawer.obj");
+    Model small_drawer_right((char*)"Models/Room/Wardrobe/Drawers/Small/small_drawer.obj");
+    Model large_drawer_left((char*)"Models/Room/Wardrobe/Drawers/Large/large_drawer.obj");
+    Model large_drawer_right((char*)"Models/Room/Wardrobe/Drawers/Large/large_drawer.obj");
     Model furniture((char*)"Models/Room/BedsideFurniture/furniture.obj");
     Model drawer((char*)"Models/Room/BedsideFurniture/Drawer/drawer.obj");
     Model lamp((char*)"Models/Room/Lamp/lamp.obj");
