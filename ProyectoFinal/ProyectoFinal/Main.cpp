@@ -114,6 +114,7 @@ int main()
     Model armchair((char*)"Models/Room/Armchair/armchair.obj");
     Model wardrobe((char*)"Models/Room/Wardrobe/wardrobe.obj");
     Model furniture((char*)"Models/Room/BedsideFurniture/furniture.obj");
+    Model drawer((char*)"Models/Room/BedsideFurniture/Drawer/drawer.obj");
     Model lamp((char*)"Models/Room/Lamp/lamp.obj");
     Model mirror((char*)"Models/Room/Mirror/mirror.obj");
     Model mustard_painting((char*)"Models/Room/Paintings/Mustard/mustard_painting.obj");
@@ -195,7 +196,6 @@ int main()
         model = glm::mat4(1);
         model = glm::translate(model, glm::vec3(2.5, 0.15, -4.5));
         model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0, 1, 0));
-        model = glm::scale(model, glm::vec3(1.15, 1.1, 1.0f));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         armchair.Draw(shader);
 
@@ -248,6 +248,14 @@ int main()
         model = glm::translate(model, glm::vec3(8.25, 0.1, -3.15));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         furniture.Draw(shader);
+
+        model = glm::mat4(1);
+        //model = glm::translate(model, glm::vec3(8.15, 0.94, -3.13));
+        model = glm::translate(model, glm::vec3(7.8, 0.94, -3.13));
+        model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0, 1, 0));
+        model = glm::scale(model, glm::vec3(0.98, 1, 1));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        drawer.Draw(shader);
 
         model = glm::mat4(1);
         model = glm::translate(model, glm::vec3(8.8, 0.1, -4.25));
