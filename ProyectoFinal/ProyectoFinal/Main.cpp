@@ -48,7 +48,9 @@ bool opening = true;
 float outside_door_degrees = 0.0f, door_degrees = 0.0f;
 float leaves_time;
 bool outside_door_open = true, door_open = true;
-bool anim_leaves = false;
+bool anim_leaves = false, is_drawer_open = false;
+float drawer_x_pos = 8.15f;
+
 
 int main()
 {
@@ -250,8 +252,7 @@ int main()
         furniture.Draw(shader);
 
         model = glm::mat4(1);
-        //model = glm::translate(model, glm::vec3(8.15, 0.94, -3.13));
-        model = glm::translate(model, glm::vec3(7.8, 0.94, -3.13));
+        model = glm::translate(model, glm::vec3(drawer_x_pos, 0.94, -3.13));
         model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0, 1, 0));
         model = glm::scale(model, glm::vec3(0.98, 1, 1));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
@@ -457,7 +458,19 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
     }
 
     if (keys[GLFW_KEY_J]) {
+        printf("J pressed - anim_leaves: %d\n", anim_leaves);
         anim_leaves = !anim_leaves;
+    }
+
+    if (keys[GLFW_KEY_K]) {
+        printf("K pressed - drawer is open: %d\n", is_drawer_open);
+        if (is_drawer_open) {
+            while (drawer_x_pos < 8.15f) drawer_x_pos += 0.1f;
+            is_drawer_open = false;
+        } else {
+            while (drawer_x_pos > 7.75f) drawer_x_pos -= 0.1f;
+            is_drawer_open = true;
+        }
     }
 
 }
