@@ -1,14 +1,15 @@
-// Std. Includes
+// Archivo: Main.cpp
+// Autor: N茅stor I. Mart铆nez Ostoa
+// Descripci贸n: Recreaci贸n de un espacio en OpenGL - Proyecto Final
+// Materia: Computaci贸n Gr谩fica e Interacci贸n Humano Computadora - FI, UNAM
+// Fecha: Mayo 2022
+
+// =============================================================================
+// Libraries
+// =============================================================================
 #include <string>
-
-// GLEW
 #include <GL/glew.h>
-
-// GLFW
 #include <GLFW/glfw3.h>
-
-
-// Other Libs
 #include "SOIL2/SOIL2.h"
 #include "stb_image.h"
 
@@ -23,15 +24,15 @@
 #include <glm/gtc/type_ptr.hpp>
 
 // Other libraries
-#include <chrono>
-#include <thread>
 #include <set>
 
 // Properties
 const GLuint WIDTH = 800, HEIGHT = 600;
 int SCREEN_WIDTH, SCREEN_HEIGHT;
 
+// =============================================================================
 // Function prototypes
+// =============================================================================
 void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
 void MouseCallback(GLFWwindow* window, double xPos, double yPos);
 void DoMovement();
@@ -40,6 +41,9 @@ void toggle_door(float& degrees, bool& open);
 void open_wardrobe_drawers(vector<int> drawers_ids, vector<float>& drawers_z_pos);
 void close_wardrobe_drawers(vector<float>& drawers_z_pos);
 vector<int> generate_wardrobe_drawers_ids();
+void saveFrame(void);
+void resetElements(void);
+void interpolation(void);
 
 
 // Camera
@@ -53,13 +57,22 @@ GLfloat lastFrame = 0.0f;
 float rot = 0.0f;
 bool anim = false;
 bool opening = true;
+
+
+// =============================================================================
+// Variables
+// =============================================================================
+
+// Outside door
 float outside_door_degrees = 0.0f, door_degrees = 0.0f;
-float leaves_time;
 bool outside_door_open = true, door_open = true;
+
+// Plant + Leaves variables
+float leaves_time;
 bool anim_leaves = false, is_drawer_open = false;
-float drawer_x_pos = 8.15f;
 
 // Wardrobe drawers 
+float drawer_x_pos = 8.15f;
 bool wd_drawers_are_open = false; // wd -> wardrobe
 float wd_init_z = -9.33;
 float wd_final_z = -8.83;
@@ -91,48 +104,9 @@ int FrameIndex = 0;
 bool play = false;
 int playIndex = 0;
 
-void saveFrame(void) {
-
-    printf("Frameindex %d\n", FrameIndex);
-
-    KeyFrame[FrameIndex].posX = posX;
-    KeyFrame[FrameIndex].posY = posY;
-    KeyFrame[FrameIndex].posZ = posZ;
-
-    FrameIndex++;
-}
-
-void resetElements(void) {
-    lamp_wardrobe_degrees = 0.0f;
-    posX = KeyFrame[0].posX;
-    posY = KeyFrame[0].posY;
-    posZ = KeyFrame[0].posZ;
-}
-
-void interpolation(void) {
-
-    if (playIndex == 2) {
-        lamp_wardrobe_degrees = -30.0f;
-    } else if (playIndex == 4) {
-        lamp_wardrobe_degrees = -60.0f;
-    }
-    else if (playIndex == 5) {
-        lamp_wardrobe_degrees = -90.0f;
-    }
-    else if (playIndex == 6) {
-        lamp_wardrobe_degrees = -120.0f;
-    }
-
-    KeyFrame[playIndex].incX = (KeyFrame[playIndex + 1].posX - KeyFrame[playIndex].posX) / i_max_steps;
-    KeyFrame[playIndex].incY = (KeyFrame[playIndex + 1].posY - KeyFrame[playIndex].posY) / i_max_steps;
-    KeyFrame[playIndex].incZ = (KeyFrame[playIndex + 1].posZ - KeyFrame[playIndex].posZ) / i_max_steps;
-
-}
-
-int main()
-{
-    // Init GLFW
+int main() {
     glfwInit();
+    
     // Set all the required options for GLFW
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -143,16 +117,13 @@ int main()
     // Create a GLFWwindow object that we can use for GLFW's functions
     GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "315618648 - Proyecto Final", nullptr, nullptr);
 
-    if (nullptr == window)
-    {
+    if (nullptr == window) {
         std::cout << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
-
         return EXIT_FAILURE;
     }
 
     glfwMakeContextCurrent(window);
-
     glfwGetFramebufferSize(window, &SCREEN_WIDTH, &SCREEN_HEIGHT);
 
     // Set the required callback functions
@@ -160,13 +131,8 @@ int main()
     glfwSetCursorPosCallback(window, MouseCallback);
 
     // GLFW Options
-    //glfwSetInputMode( window, GLFW_CURSOR, GLFW_CURSOR_DISABLED );
-
-    // Set this to true so GLEW knows to use a modern approach to retrieving function pointers and extensions
     glewExperimental = GL_TRUE;
-    // Initialize GLEW to setup the OpenGL Function pointers
-    if (GLEW_OK != glewInit())
-    {
+    if (GLEW_OK != glewInit()) {
         std::cout << "Failed to initialize GLEW" << std::endl;
         return EXIT_FAILURE;
     }
@@ -182,7 +148,9 @@ int main()
     Shader shader("Shaders/modelLoading.vs", "Shaders/modelLoading.frag");
     Shader PlantAnim("Shaders/anim.vs", "Shaders/anim.frag");
 
-    // Load models
+    // =========================================================================
+    // Model loading
+    // =========================================================================
     Model plant((char*)"Models/Room/Plant/plant.obj");
     Model leaf1((char*)"Models/Room/Plant/Leaves/L1.obj");
     Model leaf2((char*)"Models/Room/Plant/Leaves/L2.obj");
@@ -207,29 +175,26 @@ int main()
     Model lemon_painting((char*)"Models/Room/Paintings/Lemon/lemon.obj");
     Model window_((char*)"Models/Room/Window/window.obj");
     Model door((char*)"Models/Room/Door/door.obj");
-
     Model house((char*)"Models/House/Facade/house.obj");
     Model outside_door((char*)"Models/House/Outside_Door/outside_door.obj");
     Model world_floor((char*)"Models/World/world_floor.obj");
     Model tiled_floor((char*)"Models/World/Tiled_floor/tiled_floor.obj");
     Model garage_floor((char*)"Models/World/Garage_floor/garage_floor.obj");
-
     Model cone((char*)"Models/Extra/cone.obj");
 
     glm::mat4 projection = glm::perspective(camera.GetZoom(), (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 0.1f, 100.0f);
 
-    //Inicializaci髇 de KeyFrames
-
-    for (int i = 0; i < MAX_FRAMES; i++)
-    {
+    //KeyFrames initialization
+    for (int i = 0; i < MAX_FRAMES; i++) {
         KeyFrame[i].posX = 0;
         KeyFrame[i].incX = 0;
         KeyFrame[i].incY = 0;
         KeyFrame[i].incZ = 0;
     }
 
-
-    // Game loop
+    // =========================================================================
+    // Main Loop
+    // =========================================================================
     while (!glfwWindowShouldClose(window))
     {
         // Set frame time
@@ -243,7 +208,6 @@ int main()
         animacion();
 
         // Clear the colorbuffer
-        //glClearColor(0.623f, 0.627f, 1.0f, 1.0f);
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -298,7 +262,7 @@ int main()
 
 
         // ----------------------------------------------
-        // CONOS --- QUITAR DESPU蒘
+        // CONOS --- QUITAR DESPU锟絊
         model = glm::mat4(1);
         model = glm::translate(model, glm::vec3(0.3, 0.1, -3));
         model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0, 1, 0));
@@ -499,62 +463,64 @@ int main()
         glUniform1f(glGetUniformLocation(PlantAnim.Program, "time"), leaves_time);
         leaf5.Draw(PlantAnim);
 
-        // Swap the bufferss
         glfwSwapBuffers(window);
     }
-
     glfwTerminate();
     return 0;
 }
 
+// =============================================================================
+// KeyFrame functions
+// =============================================================================
+void saveFrame(void) {
+    printf("Frameindex %d\n", FrameIndex);
 
-// Moves/alters the camera positions based on user input
-void DoMovement()
-{
-    // Camera controls
-    if (keys[GLFW_KEY_W] || keys[GLFW_KEY_UP])
-    {
-        camera.ProcessKeyboard(FORWARD, deltaTime);
-    }
+    KeyFrame[FrameIndex].posX = posX;
+    KeyFrame[FrameIndex].posY = posY;
+    KeyFrame[FrameIndex].posZ = posZ;
 
-    if (keys[GLFW_KEY_S] || keys[GLFW_KEY_DOWN])
-    {
-        camera.ProcessKeyboard(BACKWARD, deltaTime);
-    }
+    FrameIndex++;
+}
 
-    if (keys[GLFW_KEY_A] || keys[GLFW_KEY_LEFT])
-    {
-        camera.ProcessKeyboard(LEFT, deltaTime);
-    }
+void resetElements(void) {
+    lamp_wardrobe_degrees = 0.0f;
+    posX = KeyFrame[0].posX;
+    posY = KeyFrame[0].posY;
+    posZ = KeyFrame[0].posZ;
+}
 
-    if (keys[GLFW_KEY_D] || keys[GLFW_KEY_RIGHT])
-    {
-        camera.ProcessKeyboard(RIGHT, deltaTime);
+void interpolation(void) {
+    if (playIndex == 2) {
+        lamp_wardrobe_degrees = -30.0f;
+    } else if (playIndex == 4) {
+        lamp_wardrobe_degrees = -60.0f;
     }
-
-    if (keys[GLFW_KEY_1]) {
-        posX += delta_mov;
+    else if (playIndex == 5) {
+        lamp_wardrobe_degrees = -90.0f;
     }
-    if (keys[GLFW_KEY_2]) {
-        posX -= delta_mov;
-    }
-
-    if (keys[GLFW_KEY_3]) {
-        posY += delta_mov;
-    }
-    if (keys[GLFW_KEY_4]) {
-        posY -= delta_mov;
+    else if (playIndex == 6) {
+        lamp_wardrobe_degrees = -120.0f;
     }
 
-    if (keys[GLFW_KEY_5]) {
-        posZ += delta_mov;
-    }
-    if (keys[GLFW_KEY_6]) {
-        posZ -= delta_mov;
-    }
+    KeyFrame[playIndex].incX = (KeyFrame[playIndex + 1].posX - KeyFrame[playIndex].posX) / i_max_steps;
+    KeyFrame[playIndex].incY = (KeyFrame[playIndex + 1].posY - KeyFrame[playIndex].posY) / i_max_steps;
+    KeyFrame[playIndex].incZ = (KeyFrame[playIndex + 1].posZ - KeyFrame[playIndex].posZ) / i_max_steps;
+}
 
+// =============================================================================
+// Movement functions
+// =============================================================================
+
+void DoMovement() { // Moves/alters the camera positions based on user input   
+
+    // Camera movement
+    if (keys[GLFW_KEY_W] || keys[GLFW_KEY_UP])      camera.ProcessKeyboard(FORWARD, deltaTime);
+    if (keys[GLFW_KEY_S] || keys[GLFW_KEY_DOWN])    camera.ProcessKeyboard(BACKWARD, deltaTime);
+    if (keys[GLFW_KEY_A] || keys[GLFW_KEY_LEFT])    camera.ProcessKeyboard(LEFT, deltaTime);
+    if (keys[GLFW_KEY_D] || keys[GLFW_KEY_RIGHT])   camera.ProcessKeyboard(RIGHT, deltaTime);
+
+    // Anim
     float delta = 0.02f;
-
     if (anim) {
         rot = (opening) ? rot + delta : rot - delta;
         if (rot >= 33.0f) opening = false;
@@ -562,6 +528,10 @@ void DoMovement()
     }
 }
 
+
+// =============================================================================
+// KeyCallback helper functions
+// =============================================================================
 void toggle_door(float& degrees, bool& to_open) {
     if (to_open) {
         while (degrees < 90.0f) degrees += 0.1f;
@@ -592,11 +562,9 @@ vector<int> generate_wardrobe_drawers_ids() {
     for (int i = 0; i < num_drawers_to_open; i++) {
         ids_set.insert(rand() % 5);
     }
-
     for (auto s : ids_set) {
         ids.push_back(s);
     }
-
     return ids;
 }
 
@@ -614,63 +582,41 @@ void close_wardrobe_drawers(vector<float> & drawers_z_pos) {
 }
 
 void animacion() {
-
-    //Movimiento del personaje
-
-    if (play)
-    {
-        if (i_curr_steps >= i_max_steps) //end of animation between frames?
-        {
+    if (play) {
+        if (i_curr_steps >= i_max_steps) { 
             playIndex++;
-            if (playIndex > FrameIndex - 2)	//end of total animation?
-            {
+            if (playIndex > FrameIndex - 2) { 
                 printf("termina anim\n");
                 playIndex = 0;
                 play = false;
+            } else {
+                i_curr_steps = 0;
+                interpolation();                  
             }
-            else //Next frame interpolations
-            {
-                i_curr_steps = 0; //Reset counter
-                                  //Interpolation
-                interpolation();
-            }
-        }
-        else
-        {
+        } else {
             //Draw animation
             posX += KeyFrame[playIndex].incX;
             posY += KeyFrame[playIndex].incY;
             posZ += KeyFrame[playIndex].incZ;
             i_curr_steps++;
         }
-
     }
 }
 
-// Is called whenever a key is pressed/released via GLFW
-void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode)
-{
-    if (GLFW_KEY_ESCAPE == key && GLFW_PRESS == action)
-    {
+// =============================================================================
+// KeyCallback: called when user interacts with keyboard's keys
+// =============================================================================
+void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode) {
+    if (GLFW_KEY_ESCAPE == key && GLFW_PRESS == action) {
         glfwSetWindowShouldClose(window, GL_TRUE);
     }
 
-    if (key >= 0 && key < 1024)
-    {
-        if (action == GLFW_PRESS)
-        {
-            keys[key] = true;
-        }
-        else if (action == GLFW_RELEASE)
-        {
-            keys[key] = false;
-        }
+    if (key >= 0 && key < 1024) {
+        if (action == GLFW_PRESS)           keys[key] = true;
+        else if (action == GLFW_RELEASE)    keys[key] = false;
     }
 
-
-    if (keys[GLFW_KEY_O]) {
-        anim = !anim;
-    }
+    if (keys[GLFW_KEY_O])   anim = !anim;
 
     // Exterior door animation
     if (keys[GLFW_KEY_U]) {
@@ -718,7 +664,7 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
     
     // Wardrobe's lamp
     if (keys[GLFW_KEY_N]) {
-
+        // Projectile throw simulation
         KeyFrame[0].posX = 3.5f; KeyFrame[0].posY = 2.1f; KeyFrame[0].posZ = -9.4f;
         KeyFrame[1].posX = 3.9f; KeyFrame[1].posY = 2.1f; KeyFrame[1].posZ = -9.4f;
         KeyFrame[2].posX = 4.3f; KeyFrame[2].posY = 2.1f; KeyFrame[2].posZ = -9.4f;
@@ -740,20 +686,21 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
             play = false;
         }
     }
-
 }
 
-void MouseCallback(GLFWwindow* window, double xPos, double yPos)
-{
-    if (firstMouse)
-    {
+// =============================================================================
+// MouseCallback: called when user interacts with the mouse
+// =============================================================================
+
+void MouseCallback(GLFWwindow* window, double xPos, double yPos) {
+    if (firstMouse) {
         lastX = xPos;
         lastY = yPos;
         firstMouse = false;
     }
 
     GLfloat xOffset = xPos - lastX;
-    GLfloat yOffset = lastY - yPos;  // Reversed since y-coordinates go from bottom to left
+    GLfloat yOffset = lastY - yPos;
 
     lastX = xPos;
     lastY = yPos;
