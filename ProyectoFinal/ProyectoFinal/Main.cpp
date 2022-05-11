@@ -8,6 +8,7 @@
 // Libraries
 // =============================================================================
 #include <string>
+#include <set>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "SOIL2/SOIL2.h"
@@ -23,9 +24,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-// Other libraries
-#include <set>
-
 // Properties
 const GLuint WIDTH = 800, HEIGHT = 600;
 int SCREEN_WIDTH, SCREEN_HEIGHT;
@@ -36,7 +34,7 @@ int SCREEN_WIDTH, SCREEN_HEIGHT;
 void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
 void MouseCallback(GLFWwindow* window, double xPos, double yPos);
 void DoMovement();
-void animacion();
+void wardrobe_lamp_animation();
 void toggle_door(float& degrees, bool& open);
 void open_wardrobe_drawers(vector<int> drawers_ids, vector<float>& drawers_z_pos);
 void close_wardrobe_drawers(vector<float>& drawers_z_pos);
@@ -106,7 +104,7 @@ int playIndex = 0;
 
 int main() {
     glfwInit();
-    
+
     // Set all the required options for GLFW
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -151,14 +149,24 @@ int main() {
     // =========================================================================
     // Model loading
     // =========================================================================
+    Model house((char*)"Models/House/Facade/house.obj");
+    Model world_floor((char*)"Models/World/world_floor.obj");
+    Model tiled_floor((char*)"Models/World/Tiled_floor/tiled_floor.obj");
+    Model garage_floor((char*)"Models/World/Garage_floor/garage_floor.obj");
+    Model cone((char*)"Models/Extra/cone.obj");
+    Model outside_door((char*)"Models/House/Outside_Door/outside_door.obj");
+    Model door((char*)"Models/Room/Door/door.obj");
+    Model armchair((char*)"Models/Room/Armchair/armchair.obj");
+    Model bed((char*)"Models/Room/Bed/bed.obj");
+    Model furniture((char*)"Models/Room/BedsideFurniture/furniture.obj");
+    Model drawer((char*)"Models/Room/BedsideFurniture/Drawer/drawer.obj");
+    Model lamp((char*)"Models/Room/Lamp/lamp.obj");
     Model plant((char*)"Models/Room/Plant/plant.obj");
     Model leaf1((char*)"Models/Room/Plant/Leaves/L1.obj");
     Model leaf2((char*)"Models/Room/Plant/Leaves/L2.obj");
     Model leaf3((char*)"Models/Room/Plant/Leaves/L3.obj");
     Model leaf4((char*)"Models/Room/Plant/Leaves/L4.obj");
     Model leaf5((char*)"Models/Room/Plant/Leaves/L5.obj");
-    Model bed((char*)"Models/Room/Bed/bed.obj");
-    Model armchair((char*)"Models/Room/Armchair/armchair.obj");
     Model wardrobe((char*)"Models/Room/Wardrobe/wardrobe.obj");
     Model small_drawer_left((char*)"Models/Room/Wardrobe/Drawers/Small/small_drawer.obj");
     Model small_drawer_right((char*)"Models/Room/Wardrobe/Drawers/Small/small_drawer.obj");
@@ -166,21 +174,11 @@ int main() {
     Model large_drawer_mid((char*)"Models/Room/Wardrobe/Drawers/Large/large_drawer.obj");
     Model large_drawer_bottom((char*)"Models/Room/Wardrobe/Drawers/Large/large_drawer.obj");
     Model wardrobe_lamp((char*)"Models/Room/Wardrobe/Lamp/wardrobe_lamp.obj");
-    Model furniture((char*)"Models/Room/BedsideFurniture/furniture.obj");
-    Model drawer((char*)"Models/Room/BedsideFurniture/Drawer/drawer.obj");
-    Model lamp((char*)"Models/Room/Lamp/lamp.obj");
     Model mirror((char*)"Models/Room/Mirror/mirror.obj");
     Model mustard_painting((char*)"Models/Room/Paintings/Mustard/mustard_painting.obj");
     Model lime_painting((char*)"Models/Room/Paintings/Lime/lime_painting.obj");
     Model lemon_painting((char*)"Models/Room/Paintings/Lemon/lemon.obj");
     Model window_((char*)"Models/Room/Window/window.obj");
-    Model door((char*)"Models/Room/Door/door.obj");
-    Model house((char*)"Models/House/Facade/house.obj");
-    Model outside_door((char*)"Models/House/Outside_Door/outside_door.obj");
-    Model world_floor((char*)"Models/World/world_floor.obj");
-    Model tiled_floor((char*)"Models/World/Tiled_floor/tiled_floor.obj");
-    Model garage_floor((char*)"Models/World/Garage_floor/garage_floor.obj");
-    Model cone((char*)"Models/Extra/cone.obj");
 
     glm::mat4 projection = glm::perspective(camera.GetZoom(), (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 0.1f, 100.0f);
 
@@ -195,8 +193,7 @@ int main() {
     // =========================================================================
     // Main Loop
     // =========================================================================
-    while (!glfwWindowShouldClose(window))
-    {
+    while (!glfwWindowShouldClose(window)) {
         // Set frame time
         GLfloat currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
@@ -205,7 +202,7 @@ int main() {
         // Check and call events
         glfwPollEvents();
         DoMovement();
-        animacion();
+        wardrobe_lamp_animation();
 
         // Clear the colorbuffer
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -581,7 +578,7 @@ void close_wardrobe_drawers(vector<float> & drawers_z_pos) {
     }
 }
 
-void animacion() {
+void wardrobe_lamp_animation() {
     if (play) {
         if (i_curr_steps >= i_max_steps) { 
             playIndex++;
@@ -610,7 +607,7 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
     if (GLFW_KEY_ESCAPE == key && GLFW_PRESS == action) {
         glfwSetWindowShouldClose(window, GL_TRUE);
     }
-
+    
     if (key >= 0 && key < 1024) {
         if (action == GLFW_PRESS)           keys[key] = true;
         else if (action == GLFW_RELEASE)    keys[key] = false;
