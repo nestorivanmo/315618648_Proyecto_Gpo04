@@ -35,7 +35,8 @@ void toggle_door(float& degrees, bool& open);
 
 
 // Camera
-Camera camera(glm::vec3(7.0f, 4.0f, 25.0f));
+//Camera camera(glm::vec3(7.0f, 4.0f, 25.0f));
+Camera camera(glm::vec3(3.5f, 1.5f, -6.0f));
 bool keys[1024];
 GLfloat lastX = 400, lastY = 300;
 bool firstMouse = true;
@@ -117,8 +118,9 @@ int main()
     Model wardrobe((char*)"Models/Room/Wardrobe/wardrobe.obj");
     Model small_drawer_left((char*)"Models/Room/Wardrobe/Drawers/Small/small_drawer.obj");
     Model small_drawer_right((char*)"Models/Room/Wardrobe/Drawers/Small/small_drawer.obj");
-    Model large_drawer_left((char*)"Models/Room/Wardrobe/Drawers/Large/large_drawer.obj");
-    Model large_drawer_right((char*)"Models/Room/Wardrobe/Drawers/Large/large_drawer.obj");
+    Model large_drawer_top((char*)"Models/Room/Wardrobe/Drawers/Large/large_drawer.obj");
+    Model large_drawer_mid((char*)"Models/Room/Wardrobe/Drawers/Large/large_drawer.obj");
+    Model large_drawer_bottom((char*)"Models/Room/Wardrobe/Drawers/Large/large_drawer.obj");
     Model furniture((char*)"Models/Room/BedsideFurniture/furniture.obj");
     Model drawer((char*)"Models/Room/BedsideFurniture/Drawer/drawer.obj");
     Model lamp((char*)"Models/Room/Lamp/lamp.obj");
@@ -245,10 +247,40 @@ int main()
         door.Draw(shader);
 
         model = glm::mat4(1);
-        model = glm::translate(model, glm::vec3(3, 0.1, -9.75));
+        model = glm::translate(model, glm::vec3(3, 0.13, -9.4));
         model = glm::scale(model, glm::vec3(1.85f, 1.5f, 1.5f));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         wardrobe.Draw(shader);
+
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(2.53, 1.542, -9.33));
+        model = glm::scale(model, glm::vec3(1.97f, 1.53f, 1.5f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        small_drawer_left.Draw(shader);
+
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(3.5, 1.542, -9.33));
+        model = glm::scale(model, glm::vec3(1.97f, 1.53f, 1.5f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        small_drawer_right.Draw(shader);
+
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(3.0, 1.15, -9.33));
+        model = glm::scale(model, glm::vec3(1.97f, 1.65f, 1.5f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        large_drawer_top.Draw(shader);
+
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(3.0, 0.75, -9.33));
+        model = glm::scale(model, glm::vec3(1.97f, 1.65f, 1.5f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        large_drawer_mid.Draw(shader);
+
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(3.0, 0.35, -9.33));
+        model = glm::scale(model, glm::vec3(1.97f, 1.65f, 1.5f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        large_drawer_bottom.Draw(shader);
 
         model = glm::mat4(1);
         model = glm::translate(model, glm::vec3(8.25, 0.1, -3.15));
