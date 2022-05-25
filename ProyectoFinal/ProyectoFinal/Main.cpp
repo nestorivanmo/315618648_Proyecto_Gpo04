@@ -240,7 +240,7 @@ int main() {
         model = glm::scale(model, glm::vec3(1.12, 1, 1.1));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         garage_floor.Draw(shader);
-
+        
         model = glm::mat4(1);
         model = glm::translate(model, glm::vec3(0, -0.1, 0));
         model = glm::scale(model, glm::vec3(30.0f, 1.0f, 30.0f));
