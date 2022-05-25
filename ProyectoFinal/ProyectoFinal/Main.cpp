@@ -288,10 +288,28 @@ int main() {
         living_room_painting.Draw(shader);
 
         model = glm::mat4(1);
-        model = glm::translate(model, glm::vec3(-3.0, 0.1, -5));
+        model = glm::translate(model, glm::vec3(-2.0, 0.1, -5));
         model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0, 1, 0));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         tapestry.Draw(shader);
+
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(-1.7, 0.1, -5));
+        model = glm::rotate(model, glm::radians(270.0f), glm::vec3(0, 1, 0));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        white_furniture.Draw(shader);
+
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(0.95, 0.1, -5));
+        model = glm::rotate(model, glm::radians(270.0f), glm::vec3(0, 1, 0));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        brown_furniture.Draw(shader);
+
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(0.95, 0.8, -5));
+        model = glm::rotate(model, glm::radians(270.0f), glm::vec3(0, 1, 0));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        tv.Draw(shader);
 
         
         // ----------------------------------------------
