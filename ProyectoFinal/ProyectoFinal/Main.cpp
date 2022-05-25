@@ -182,6 +182,12 @@ int main() {
     Model white_armchair((char*)"Models/LivingRoom/WhiteArmchair/white_armchair.obj");
     Model white_furniture((char*)"Models/LivingRoom/WhiteFurniture/white_furniture.obj");
     Model brown_furniture((char*)"Models/LivingRoom/BrownFurniture/brown_furniture.obj");
+    Model cactus((char*)"Models/LivingRoom/Cactus/cactus.obj");
+    Model living_room_painting ((char*)"Models/LivingRoom/Painting/painting.obj");
+    Model living_room_frame((char*)"Models/LivingRoom/WallFrame/wall_frame.obj");
+    Model tapestry((char*)"Models/LivingRoom/Tapestry/tapestry.obj");
+    Model tv((char*)"Models/LivingRoom/TV/tv.obj");
+    Model wall_clock((char*)"Models/LivingRoom/WallClock/wall_clock.obj");
 
     glm::mat4 projection = glm::perspective(camera.GetZoom(), (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 0.1f, 100.0f);
 
