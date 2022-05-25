@@ -268,34 +268,32 @@ int main() {
 
 
         // ----------------------------------------------
-        // CONOS --- QUITAR DESPU�S
+        // Sala de estar (segundo cuarto)
         model = glm::mat4(1);
-        model = glm::translate(model, glm::vec3(0.3, 0.1, -3));
+        model = glm::translate(model, glm::vec3(-4.3, 0.1, -5));
         model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0, 1, 0));
-        model = glm::scale(model, glm::vec3(1.15, 1.1, 1.0f));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         white_armchair.Draw(shader);
 
         model = glm::mat4(1);
-        model = glm::translate(model, glm::vec3(0.3, 0.1, -6));
+        model = glm::translate(model, glm::vec3(-4.3, 0.1, -1.7));
         model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0, 1, 0));
-        model = glm::scale(model, glm::vec3(1.15, 1.1, 1.0f));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        white_furniture.Draw(shader);
+        cactus.Draw(shader);
 
         model = glm::mat4(1);
-        model = glm::translate(model, glm::vec3(-3, 0.1, -3));
+        model = glm::translate(model, glm::vec3(-5.35, 2.3, -5));
         model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0, 1, 0));
-        model = glm::scale(model, glm::vec3(1.15, 1.1, 1.0f));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        brown_furniture.Draw(shader);
+        living_room_painting.Draw(shader);
 
         model = glm::mat4(1);
-        model = glm::translate(model, glm::vec3(-3, 0.1, -6));
+        model = glm::translate(model, glm::vec3(-3.0, 0.1, -5));
         model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0, 1, 0));
-        model = glm::scale(model, glm::vec3(1.15, 1.1, 1.0f));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        cone.Draw(shader);
+        tapestry.Draw(shader);
+
+        
         // ----------------------------------------------
 
         model = glm::mat4(1);
