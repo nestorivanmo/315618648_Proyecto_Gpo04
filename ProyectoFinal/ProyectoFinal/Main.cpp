@@ -179,6 +179,9 @@ int main() {
     Model lime_painting((char*)"Models/Room/Paintings/Lime/lime_painting.obj");
     Model lemon_painting((char*)"Models/Room/Paintings/Lemon/lemon.obj");
     Model window_((char*)"Models/Room/Window/window.obj");
+    Model white_armchair((char*)"Models/LivingRoom/WhiteArmchair/white_armchair.obj");
+    Model white_furniture((char*)"Models/LivingRoom/WhiteFurniture/white_furniture.obj");
+    Model brown_furniture((char*)"Models/LivingRoom/BrownFurniture/brown_furniture.obj");
 
     glm::mat4 projection = glm::perspective(camera.GetZoom(), (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 0.1f, 100.0f);
 
@@ -265,21 +268,21 @@ int main() {
         model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0, 1, 0));
         model = glm::scale(model, glm::vec3(1.15, 1.1, 1.0f));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        cone.Draw(shader);
+        white_armchair.Draw(shader);
 
         model = glm::mat4(1);
         model = glm::translate(model, glm::vec3(0.3, 0.1, -6));
         model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0, 1, 0));
         model = glm::scale(model, glm::vec3(1.15, 1.1, 1.0f));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        cone.Draw(shader);
+        white_furniture.Draw(shader);
 
         model = glm::mat4(1);
         model = glm::translate(model, glm::vec3(-3, 0.1, -3));
         model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0, 1, 0));
         model = glm::scale(model, glm::vec3(1.15, 1.1, 1.0f));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        cone.Draw(shader);
+        brown_furniture.Draw(shader);
 
         model = glm::mat4(1);
         model = glm::translate(model, glm::vec3(-3, 0.1, -6));
