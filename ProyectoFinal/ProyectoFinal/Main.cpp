@@ -183,7 +183,7 @@ int main() {
     Model white_furniture((char*)"Models/LivingRoom/WhiteFurniture/white_furniture.obj");
     Model brown_furniture((char*)"Models/LivingRoom/BrownFurniture/brown_furniture.obj");
     Model cactus((char*)"Models/LivingRoom/Cactus/cactus.obj");
-    Model living_room_painting ((char*)"Models/LivingRoom/Painting/painting.obj");
+    Model living_room_painting((char*)"Models/LivingRoom/Painting/painting.obj");
     Model living_room_frame((char*)"Models/LivingRoom/WallFrame/wall_frame.obj");
     Model tapestry((char*)"Models/LivingRoom/Tapestry/tapestry.obj");
     Model tv((char*)"Models/LivingRoom/TV/tv.obj");
@@ -192,6 +192,8 @@ int main() {
     Model bookshelf2((char*)"Models/LivingRoom/BookShelf/book_shelf.obj");
     Model bookshelf3((char*)"Models/LivingRoom/BookShelf/book_shelf.obj");
     Model bookshelf4((char*)"Models/LivingRoom/BookShelf/book_shelf.obj");
+    Model lr_window((char*)"Models/LivingRoom/Window/window.obj");
+    Model lr_window2((char*)"Models/LivingRoom/Window/window2.obj");
 
     glm::mat4 projection = glm::perspective(camera.GetZoom(), (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 0.1f, 100.0f);
 
@@ -286,6 +288,13 @@ int main() {
         cactus.Draw(shader);
 
         model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(-5.15, 1.6, -1.7));
+        model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0, 1, 0));
+        model = glm::scale(model, glm::vec3(1.5, 2.2, 1));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        lr_window2.Draw(shader);
+
+        model = glm::mat4(1);
         model = glm::translate(model, glm::vec3(-5.35, 2.3, -5));
         model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0, 1, 0));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
@@ -327,9 +336,15 @@ int main() {
         bookshelf1.Draw(shader);
 
         model = glm::mat4(1);
-        model = glm::translate(model, glm::vec3(0, 2.9, -9.75));
+        model = glm::translate(model, glm::vec3(0, 2.7, -9.75));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         bookshelf2.Draw(shader);
+
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(-1.8, 1.5, -9.6));
+        model = glm::scale(model, glm::vec3(1.5,2.3,1));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        lr_window.Draw(shader);
 
         model = glm::mat4(1);
         model = glm::translate(model, glm::vec3(-3.35, 1.8, -9.75));
@@ -337,7 +352,7 @@ int main() {
         bookshelf3.Draw(shader);
 
         model = glm::mat4(1);
-        model = glm::translate(model, glm::vec3(-3.35, 2.9, -9.75));
+        model = glm::translate(model, glm::vec3(-3.35, 2.7, -9.75));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         bookshelf4.Draw(shader);
 
