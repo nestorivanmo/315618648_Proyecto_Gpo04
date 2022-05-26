@@ -1,24 +1,25 @@
 ﻿  Main.cpp
 C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(75,24): warning C4305: 'initializing': truncation from 'double' to 'float'
 C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(76,25): warning C4305: 'initializing': truncation from 'double' to 'float'
-C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(201,30): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(423,23): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(542,46): warning C4305: '-=': truncation from 'double' to 'float'
-C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(551,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(697,17): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(698,17): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(702,21): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(703,21): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(705,13): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(706,13): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(213,30): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(490,23): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(609,46): warning C4305: '-=': truncation from 'double' to 'float'
+C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(618,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(764,17): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(765,17): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(769,21): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(770,21): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(772,13): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\ProyectoFinal\Main.cpp(773,13): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
 soil2-debug.lib(SOIL2.obj) : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:ICF' specification
 LINK : warning LNK4098: defaultlib 'MSVCRTD' conflicts with use of other libs; use /NODEFAULTLIB:library
   Generating code
-  Previous IPDB and IOBJ mismatch, fall back to full compilation.
-  All 860 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  1 of 860 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
 soil2-debug.lib(etc1_utils.obj) : warning LNK4099: PDB 'soil2-debug.pdb' was not found with 'soil2-debug.lib(etc1_utils.obj)' or at 'C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\Release\soil2-debug.pdb'; linking object as if no debug info
 soil2-debug.lib(image_DXT.obj) : warning LNK4099: PDB 'soil2-debug.pdb' was not found with 'soil2-debug.lib(image_DXT.obj)' or at 'C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\Release\soil2-debug.pdb'; linking object as if no debug info
 soil2-debug.lib(image_helper.obj) : warning LNK4099: PDB 'soil2-debug.pdb' was not found with 'soil2-debug.lib(image_helper.obj)' or at 'C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\Release\soil2-debug.pdb'; linking object as if no debug info
-soil2-debug.lib(SOIL2.obj) : warning LNK4099: PDB 'soil2-debug.pdb' was not found with 'soil2-debug.lib(SOIL2.obj)' or at 'C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\Release\soil2-debug.pdb'; linking object as if no debug info
+soil2-debug.lib(SOIL2.obj) : warning LNK4099: PDB '' was not found with 'soil2-debug.lib(SOIL2.obj)' or at ''; linking object as if no debug info
   ProyectoFinal.vcxproj -> C:\Users\Nestor\Desktop\Repositorio\315618648_Proyecto_Gpo04\ProyectoFinal\Release\ProyectoFinal.exe
